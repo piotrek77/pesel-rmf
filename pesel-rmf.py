@@ -21,7 +21,8 @@ for linia in linie:
     if ':' in linia:
         pesel = linia[linia.find(':')+1:]
     pesele.append(pesel)
-print("Pesele ze strony RMF:")    
+print("Pesele ze strony RMF:")
+wyslijEmail.wyslijEmail(peselrmfParams.do, 'RMF dzisiajszy pesel: '+pesele[0],'')
 for pesel in pesele:    
     print(pesel)
 print("Pesele z pliku:")
