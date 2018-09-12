@@ -9,20 +9,28 @@ listaPeseli = csv.reader(open('listaPeseli.csv', newline=''), delimiter=';', quo
 listaPeseliList = list(listaPeseli)
 listaPeseliList.pop(0) #usuniecie pierwszego elementu (naglowka)
 
-r = requests.get('http://www.rmf.fm/f/pesel.html', verify=True)
+r = requests.get('http://www.rmf.fm/r/pesel.html', verify=True)
 soup = BS(r.text, 'html.parser')
 zawartosc = soup.find(id = 'xpesele-contents').get_text()
-linie = zawartosc.split('«')
+#linie = zawartosc.split('</div>')
+linie = zawartosc
+linia = zawartosc
 #print(linie)
 pesel = ''
 pesele = []
-for linia in linie:
+#for linia in linie:
+if linia != '':
+    print('linia=['+linia+']')
     pesel=''
     if ')' in linia:
+        print(linia.find(')'))
         pesel = linia[linia.find(')')+1:]
-    if ':' in linia:
-        pesel = linia[linia.find(':')+1:]
-    if pesel != '':
+        pesel = pesel[:11]
+        linia = linia[linia.find(')')+11:]
+#    if ':' in linia:
+#        pesel = linia[linia.find(':')+1:]
+    if (pesel != ''):
+        print('pesel ['+pesel+'] dodany')
         pesele.append(pesel)
 print("Pesele ze strony RMF:")
 if pesele[0]!='???????????':
@@ -30,8 +38,8 @@ if pesele[0]!='???????????':
 for pesel in pesele:    
     print(pesel)
 print("Pesele z pliku:")
-#for pesel in listaPeseliList:
-    #print(pesel)
+for pesel in listaPeseliList:
+    print(pesel)
 znalezionych = 0
 wszystkich = 0
     
